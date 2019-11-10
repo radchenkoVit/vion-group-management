@@ -3,10 +3,10 @@
       <nav class="navbar navbar-expand navbar-dark bg-dark">
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a router-link to="/" class="nav-link">Home</a>
+          <router-link to="/home" class="nav-link">Home</router-link>
         </li>
         <li class="nav-item" v-if="isAdmin">
-          <a router-link to="/admin" class="nav-link"> Admin Panel </a>
+          <router-link to="/admin" class="nav-link"> Admin Panel </router-link>
         </li>
       </div>
 
