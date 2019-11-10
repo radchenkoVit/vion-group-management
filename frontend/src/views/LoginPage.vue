@@ -38,7 +38,7 @@
 <script>
 import Logo from '@/components/Logo'
 import Footer from '@/components/PageFooter'
-import userService from '@/services/test/userservice'
+import authService from '@/services/auth'
 import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
 
 export default {
@@ -78,7 +78,7 @@ export default {
         return
       }
 
-      userService.login(this.form).then(() => {
+        authService.login(this.form).then(() => {
         console.log('inside after loging page')
         this.$router.push({ name: 'HomePage' })
       }).catch((error) => {

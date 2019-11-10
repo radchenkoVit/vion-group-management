@@ -6,8 +6,8 @@ import HomePage from '@/views/HomePage'
 import AdminPage from '@/views/AdminPage'
 import NotFoundPage from '@/views/NotFound'
 import Role from '@/model/role'
-import userService from '@/services/test/userservice'
-import UnathorizedPage from '@/views/UnathorizedPage'
+import authService from '@/services/auth'
+import UnauthorizedPage from '@/views/UnathorizedPage'
 
 Vue.use(Router)
 
@@ -36,9 +36,9 @@ const router = new Router({
     component: AdminPage,
     meta: { roles: [Role.ADMIN] }
   }, {
-    path: '/unathorized',
-    name: 'unathorized',
-    component: UnathorizedPage
+    path: '/unauthorized',
+    name: 'unauthorized',
+    component: UnauthorizedPage
   }, {
     path: '/404',
     component: NotFoundPage
@@ -51,13 +51,13 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   // TODO, HOW to get info from vuex
   const { roles } = to.meta
-  const authificated = userService.authificatedSubject ? userService.authificatedSubject.value : null
-  const currentUserRole = userService.userRoles ? userService.userRoles.replace(/"/g, '') : null
-  const currentUserToken = userService.userToken
+  const authenticated = authService.authenticatedSubject ? authService.authenticatedSubject.value : null
+  const currentUserRole = authService.userRoles ? authService.userRoles : null
+  const currentUserToken = authService.userToken
 
-  console.log('authificated: ' + authificated)
+  console.log('authificated: ' + authenticated)
 
-  if (authificated === false) {
+  if (authenticated === false) {
     console.log('forward to login')
     return next({ path: '/login' })
   }
@@ -72,8 +72,8 @@ router.beforeEach((to, from, next) => {
 
   if (roles) {
     if (!roles.includes(currentUserRole)) {
-      console.log('forward to unathorized')
-      return next({ name: 'unathorized' })
+      console.log('forward to unauthorized')
+      return next({ name: 'unauthorized' })
     }
   }
 

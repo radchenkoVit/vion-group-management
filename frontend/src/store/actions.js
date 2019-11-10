@@ -1,4 +1,4 @@
-import meService from '@/services/user/meservice'
+import meService from '@/services/meservice'
 
 export const getMyData = ({ commit }) => {
   meService.getMyData().then(data => {

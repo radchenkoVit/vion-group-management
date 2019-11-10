@@ -24,9 +24,7 @@
 
 <script>
 import Role from '@/model/role'
-import userService from '@/services/test/userservice'
-// eslint-disable-next-line
-import meService from '@/services/user/meservice'
+import authService from '@/services/auth'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -36,7 +34,7 @@ export default {
       'user'
     ]),
     isAdmin () {
-      return userService.userRoles.replace(/"/g, '') === Role.ADMIN
+      return authService.userRoles === Role.ADMIN
     }
   },
   created () {

@@ -8,10 +8,10 @@
                             401
                         </span>
                         <div class="mb-4 lead">
-                            Unathorized! Access to this resourse is denied.
+                          Unauthorized! Access to this resourse is denied.
                         </div>
-                        <a href="/home" class="btn btn-link">Back to Home Page</a>
-                        <a href="/login" class="btn btn-link">Back to Login Page</a>
+                      <router-link to="/home" class="btn btn-link"> Back to Home Page </router-link>
+                      <router-link to="/login" class="btn btn-link"> Back to Login Page </router-link>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
 </template>
 <script>
 export default {
-  name: 'unathorized'
+  name: 'unauthorized'
 }
 </script>
 
