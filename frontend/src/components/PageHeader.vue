@@ -23,19 +23,15 @@
 </template>
 
 <script>
-import Role from '@/model/role'
-import authService from '@/services/auth'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Header',
   computed: {
     ...mapGetters([
-      'user'
-    ]),
-    isAdmin () {
-      return authService.userRoles === Role.ADMIN
-    }
+      'user',
+        'isAdmin'
+    ])
   },
   created () {
     if (!this.user.authenticated) {

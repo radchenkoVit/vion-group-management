@@ -11,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Configuration
-
 @PropertySource("classpath:application.properties")
 @Validated
 public class MailProperties {
