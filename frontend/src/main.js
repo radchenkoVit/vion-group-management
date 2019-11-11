@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import Vuelidate from 'vuelidate'
+import { TOKEN_NAME } from './model/constants'
 
 Vue.config.productionTip = false
 Vue.use(Vuelidate)
@@ -11,7 +12,7 @@ Vue.use(Vuelidate)
 axios.defaults.headers.common.Accept = 'application/json'
 
 axios.interceptors.request.use((config) => {
-  let tokenBarer = localStorage.getItem('user_token') ? localStorage.getItem('user_token').replace(/"/g, '') : null
+  let tokenBarer = localStorage.getItem(TOKEN_NAME) ? localStorage.getItem(TOKEN_NAME) : null
   console.log('token value', tokenBarer)
 
   if (tokenBarer) {
