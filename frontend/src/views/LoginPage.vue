@@ -78,7 +78,7 @@ export default {
         return
       }
 
-        authService.login(this.form).then(() => {
+      authService.login(this.form).then(() => {
         console.log('inside after loging page')
         this.$router.push({ name: 'HomePage' })
       }).catch((error) => {

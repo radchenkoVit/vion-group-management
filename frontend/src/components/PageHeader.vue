@@ -30,7 +30,7 @@ export default {
   computed: {
     ...mapGetters([
       'user',
-        'isAdmin'
+      'isAdmin'
     ])
   },
   created () {

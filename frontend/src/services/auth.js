@@ -24,8 +24,8 @@ class AuthService {
 
   login (user) {
     return axios.post('/api/auth/login', user).then(response => {
-      let token = response.headers['authorization'];
-      let role = response.headers[ROLES].replace(/"/g, '');
+      let token = response.headers['authorization']
+      let role = response.headers[ROLES]
 
       localStorage.setItem(TOKEN_NAME, token)
       localStorage.setItem(ROLES, role)

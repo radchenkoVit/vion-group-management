@@ -1,4 +1,4 @@
-import Role from "../model/role";
+import Role from '../model/role'
 
 export const user = state => state.user
 
