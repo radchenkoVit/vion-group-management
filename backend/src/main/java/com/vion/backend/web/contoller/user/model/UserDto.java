@@ -39,4 +39,19 @@ public class UserDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public static UserDto of(Long id, String name, String email) {
+        UserDto userDto = new UserDto();
+        userDto.setId(id);
+        userDto.setName(name);
+        userDto.setEmail(email);
+        return userDto;
+    }
+
+    public static UserDto of(String name, String email) {
+        UserDto userDto = new UserDto();
+        userDto.setName(name);
+        userDto.setEmail(email);
+        return userDto;
+    }
 }

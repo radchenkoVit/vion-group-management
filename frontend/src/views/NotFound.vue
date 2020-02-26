@@ -10,7 +10,7 @@
                         <div class="mb-4 lead">
                             Oops! We can't seem to find the page you are looking for.
                         </div>
-                        <a href="/home" class="btn btn-link">Back to Home</a>
+                        <router-link to="/home" class="btn btn-link"> Back to Home Page </router-link>
                     </div>
                 </div>
             </div>

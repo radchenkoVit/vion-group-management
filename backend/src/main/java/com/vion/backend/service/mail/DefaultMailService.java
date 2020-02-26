@@ -1,6 +1,8 @@
 package com.vion.backend.service.mail;
 
 import com.vion.backend.config.MailProperties;
+import com.vion.backend.web.contoller.user.model.RegistrationDto;
+import com.vion.backend.web.contoller.user.model.UserDto;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -14,17 +16,18 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @Component
-public class DefaultMailManager implements MailManager {
+public class DefaultMailService implements MailService {
     private AsyncMailer mailer;
     private Configuration configuration;
     private MailProperties mailProperties;
 
     @Autowired
-    public DefaultMailManager(AsyncMailer mailer, Configuration configuration, MailProperties mailProperties) {
+    public DefaultMailService(AsyncMailer mailer, Configuration configuration, MailProperties mailProperties) {
         this.mailer = mailer;
         this.configuration = configuration;
         this.mailProperties = mailProperties;
@@ -47,6 +50,20 @@ public class DefaultMailManager implements MailManager {
         } catch (MessagingException e) {
             log.error("Failed to send an email", e);
         }
+    }
+
+    @Override
+    public void sendActivationEmail(RegistrationDto registrationDto) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("activation_link", registrationDto.getActivationCodeLink());
+        send(registrationDto.getEmail(), "Activate your account", "activation-mail.ftl", model);
+    }
+
+    @Override
+    public void sendWelcomeEmail(UserDto user) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("user", user);
+        send(user.getEmail(), String.format("Welcome %s to Vion Project", user.getName()), "welcome-mail.ftl", model);
     }
 
     private String getTemplateHtml(String template, Map<String, Object> model) {
