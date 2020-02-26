@@ -34,7 +34,7 @@ public class UserRestController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/me")
+    @GetMapping(value = "/me") //for header info at vue pages
     public ResponseEntity<UserDto> findMe() {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         UserDto user = userService.findByEmailContains(email);

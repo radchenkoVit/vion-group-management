@@ -1,6 +1,8 @@
 package com.vion.backend.controller.rest;
 
 import com.vion.backend.service.RegistrationService;
+import com.vion.backend.service.mail.MailService;
+import com.vion.backend.web.contoller.user.model.RegistrationDto;
 import com.vion.backend.web.contoller.user.model.RegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,13 @@ import javax.validation.Valid;
 public class RegistrationController {
     @Autowired
     private RegistrationService registrationService;
+    @Autowired
+    private MailService mailService;
 
     @PostMapping(value = "/auth/registration")
     public ResponseEntity registerUser(@RequestBody @Valid RegistrationRequest request) {
-        registrationService.register(request);
+        RegistrationDto registrationDto = registrationService.register(request);
+        mailService.sendActivationEmail(registrationDto);
         return new ResponseEntity(null, HttpStatus.CREATED);
     }
 }
