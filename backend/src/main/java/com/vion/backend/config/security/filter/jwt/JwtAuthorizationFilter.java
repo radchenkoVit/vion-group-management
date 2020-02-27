@@ -1,5 +1,6 @@
 package com.vion.backend.config.security.filter.jwt;
 
+import com.vion.backend.service.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,10 +15,12 @@ import java.io.IOException;
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private JwtTokenProvider jwtTokenProvider;
+    private TokenService tokenService;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider, TokenService tokenService) {
         super(authenticationManager);
         jwtTokenProvider = tokenProvider;
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -25,7 +28,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                                     HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         Authentication authentication = jwtTokenProvider.getAuthentication(request);
 
-        if (authentication != null && jwtTokenProvider.validateToken(request)) {
+        if (authentication != null && jwtTokenProvider.validateToken(request) && tokenService.isExist(request)) {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 

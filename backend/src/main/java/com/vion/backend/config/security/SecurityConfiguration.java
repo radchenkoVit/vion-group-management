@@ -3,6 +3,7 @@ package com.vion.backend.config.security;
 import com.vion.backend.config.security.filter.jwt.JwtAuthenticationFilter;
 import com.vion.backend.config.security.filter.jwt.JwtAuthorizationFilter;
 import com.vion.backend.config.security.filter.jwt.JwtTokenProvider;
+import com.vion.backend.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,12 +24,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder passwordEncoder;
     private UserDetailsService userDetailService;
     private JwtTokenProvider jwtTokenProvider;
+    private TokenService tokenService;
 
     @Autowired
-    public SecurityConfiguration(BCryptPasswordEncoder passwordEncoder, UserDetailsService userDetailService, JwtTokenProvider jwtTokenProvider) {
+    public SecurityConfiguration(BCryptPasswordEncoder passwordEncoder, UserDetailsService userDetailService, JwtTokenProvider jwtTokenProvider, TokenService tokenService) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailService = userDetailService;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -38,14 +41,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/*").permitAll()
-                    .antMatchers("/h2_console/**").permitAll()
+                    .antMatchers("/h2-console/**").permitAll()
                     .and().authorizeRequests()
                         .antMatchers("/api/secure/useradmin").hasAnyRole("USER", "ADMIN")
                         .antMatchers("/api/secure/admin").hasAnyRole("ADMIN")
                         .antMatchers("/api/secure/authenticated").authenticated()
                     .and()
-                        .addFilterAt(new JwtAuthenticationFilter(LOGIN_ENDPOINT, authenticationManager(), jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                        .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtTokenProvider))
+                        .addFilterAt(new JwtAuthenticationFilter(LOGIN_ENDPOINT, authenticationManager(), jwtTokenProvider, tokenService), UsernamePasswordAuthenticationFilter.class)
+                        .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtTokenProvider, tokenService))
                     .authorizeRequests()
                 .and()
                     .formLogin()

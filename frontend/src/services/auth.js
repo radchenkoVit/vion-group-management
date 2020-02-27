@@ -35,12 +35,12 @@ class AuthService {
   }
 
   logout () {
-    // return axios.post('/api/auth/logout').then(response => {
-    localStorage.removeItem(TOKEN_NAME)
-    localStorage.removeItem(ROLES)
-    currentUserToken.next(null)
-    authenticatedSubject.next(false)
-    // })
+    return axios.post('/api/auth/logout').then(response => {
+      localStorage.removeItem(TOKEN_NAME)
+      localStorage.removeItem(ROLES)
+      currentUserToken.next(null)
+      authenticatedSubject.next(false)
+    })
   }
 }
 

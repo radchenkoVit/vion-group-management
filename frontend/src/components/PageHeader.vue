@@ -24,6 +24,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import authService from '@/services/auth'
 
 export default {
   name: 'Header',
@@ -40,13 +41,14 @@ export default {
   },
   methods: {
     logout () {
-      this.$store.dispatch('logout')
-      this.$router.push({ name: 'LoginPage' })
-      // userService.logout().then(() => {
-      //   this.$router.push({ name: 'LoginPage' })
-      // }).catch((error) => {
-      //   console.log(error)
-      // })
+      // this.$store.dispatch('logout')
+      // this.$router.push({ name: 'LoginPage' })
+      authService.logout().then(() => {
+        this.$store.dispatch('logout')
+        this.$router.push({ name: 'LoginPage' })
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 }
