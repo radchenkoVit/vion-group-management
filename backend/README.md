@@ -56,4 +56,4 @@ TO run application with different profile use VMoption: -Dspring.profiles.active
     
 ## Runtime Database
 
-    To reach runtime DB go to 
+    To reach runtime DB go to http://localhost:8000/h2-console/, port is 8000 in the example
