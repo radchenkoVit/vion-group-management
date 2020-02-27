@@ -4,7 +4,6 @@ import com.vion.backend.entity.User;
 import com.vion.backend.exceptions.BrokenRequestException;
 import com.vion.backend.exceptions.NotFoundEntityException;
 import com.vion.backend.repository.UserRepository;
-import com.vion.backend.web.contoller.user.model.RegistrationDto;
 import com.vion.backend.web.contoller.user.model.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

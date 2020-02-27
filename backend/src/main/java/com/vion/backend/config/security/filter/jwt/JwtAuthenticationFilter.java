@@ -1,6 +1,7 @@
 package com.vion.backend.config.security.filter.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vion.backend.service.TokenService;
 import com.vion.backend.web.contoller.user.model.UserDto;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,11 +19,13 @@ import java.util.ArrayList;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
     private JwtTokenProvider jwtTokenProvider;
+    private TokenService tokenService;
 
-    public JwtAuthenticationFilter(String url, AuthenticationManager authManager, JwtTokenProvider jwtTokenProvider) {
+    public JwtAuthenticationFilter(String url, AuthenticationManager authManager, JwtTokenProvider jwtTokenProvider, TokenService tokenService) {
         super(new AntPathRequestMatcher(url, "POST"));
         setAuthenticationManager(authManager);
         this.jwtTokenProvider = jwtTokenProvider;
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -48,6 +51,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         UserDetails user = (UserDetails) auth.getPrincipal();
         String role = user.getAuthorities().iterator().next().getAuthority();
         String token = jwtTokenProvider.generateToken(user.getUsername(), role);
+        tokenService.addToken(token);
 
         response.addHeader(jwtTokenProvider.getJwtHeaderString(), (jwtTokenProvider.getJwtTokenPrefix() + token).trim());
         response.addHeader("roles", role);

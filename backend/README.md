@@ -53,3 +53,7 @@ TO run application with different profile use VMoption: -Dspring.profiles.active
 ## Swagger
     
     To reach swagger go to localhost:8000/swagger-ui.htnl, port - could be changed due to properties
+    
+## Runtime Database
+
+    To reach runtime DB go to 

@@ -12,6 +12,11 @@ CREATE TABLE users (
     CONSTRAINT users_PK PRIMARY KEY (id)
     );
 
+CREATE TABLE tokens (
+    token VARCHAR(255),
+    CONSTRAINT tokens_PK PRIMARY KEY (token)
+);
+
 --CREATE TABLE groups (
 --    id IDENTITY,
 --    name VARCHAR(100) NOT NULL UNIQUE,
