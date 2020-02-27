@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <span class="copyright">&copy; 2018 Arhat-do.com</span>
+    <span class="copyright">&copy; 2020 vion.com</span>
     <ul class="footer-links list-inline float-right">
       <li class="list-inline-item"><a href="#">About</a></li>
       <li class="list-inline-item"><a href="#">Terms of Service</a></li>
