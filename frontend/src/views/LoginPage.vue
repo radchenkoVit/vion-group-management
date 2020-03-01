@@ -4,6 +4,16 @@
       <div class="register-form">
         <Logo/>
         <form @submit.prevent="submitForm">
+          <MInputWrapper
+            :title="'Email'"
+            :error="'Some error'">
+            <AInput
+              v-validate="validatingRule"
+              v-model="form.email"
+              name="email"
+              placeholder="Enter email"
+              atAttribute="field-email" />
+          </MInputWrapper>
           <div v-show="errorMessage" class="alert alert-danger failed">{{ errorMessage }}</div>
           <div class="form-group">
             <label for="email">Email address</label>
@@ -37,10 +47,12 @@
 
 <script>
 import Logo from '@/components/Logo'
-import Footer from '@/components/PageFooter'
 import authService from '@/services/auth'
+import Footer from '@/components/PageFooter'
+import AInput from '@/design-system/entities/atoms/a-input/a-input';
+import MInputWrapper from '@/design-system/entities/molecules/m-input-wrapper/m-input-wrapper';
 import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
-
+/* eslint-disable */
 export default {
   name: 'LoginPage',
   data: function () {
@@ -55,7 +67,9 @@ export default {
   },
   components: {
     Logo,
-    Footer
+    Footer,
+    AInput,
+    MInputWrapper
   },
   validations: {
     form: {
@@ -71,7 +85,25 @@ export default {
       }
     }
   },
+  computed: {
+    validatingRule() {
+      return {
+        maxLength: true,
+        required: true,
+        email: true
+      };
+    },
+    isValid() {
+      return this.errors.any();
+    }
+  },
   methods: {
+    getErrorMessage(field) {
+      return this.errors.first(field);
+    },
+    changeEmailInput(value) {
+      console.log('value', value);
+    },
     submitForm () {
       this.$v.$touch()
       if (this.$v.$invalid) {

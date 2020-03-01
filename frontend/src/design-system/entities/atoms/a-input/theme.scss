@@ -1,0 +1,28 @@
+@import '../../../common/scss/ds-variables/ds-variables';
+
+.a-input {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: $ds-black;
+  width: 100%;
+  border: 1px solid transparent;
+  border-bottom-color: $ds-black;
+  padding: 5px 0 6px;
+
+  &[disabled] {
+    background-color: transparent;
+    color: $ds-light-grey;
+    border-bottom-color: $ds-light-grey;
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: $ds-grey;
+  }
+
+  &:focus {
+    outline: 0;
+    border-bottom-color: $ds-active-blue;
+  }
+}
